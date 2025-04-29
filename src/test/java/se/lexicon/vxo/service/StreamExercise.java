@@ -36,9 +36,8 @@ public class StreamExercise {
      */
     @Test
     public void task2() {
-        long amount = 0;
+        long amount = people.stream().count();
 
-        // todo: write your code here
 
         assertEquals(10000, amount);
     }
@@ -48,10 +47,11 @@ public class StreamExercise {
      */
     @Test
     public void task3() {
-        long amount = 0;
+        long amount = people.stream()
+        .filter(person -> "Andersson".equals(person.getLastName()))
+        .count();
         int expected = 90;
 
-        // todo: write your code here
 
         assertEquals(expected, amount);
     }
@@ -62,9 +62,10 @@ public class StreamExercise {
     @Test
     public void task4() {
         int expectedSize = 4988;
-        List<Person> females = null;
+        List<Person> females = people.stream()
+                .filter(person -> person.getGender() == Gender.FEMALE)
+                .collect(Collectors.toList());
 
-        // todo: write your code here
 
         assertNotNull(females);
         assertEquals(expectedSize, females.size());
@@ -76,7 +77,12 @@ public class StreamExercise {
     @Test
     public void task5() {
         int expectedSize = 8882;
-        Set<LocalDate> dates = null;
+        Set<LocalDate> dates = people.stream()
+                .map(person -> person.getBirthDate())
+                // Alternative method reference syntax:
+                // .map(Person::getBirthDate)
+                .collect(Collectors.toCollection(TreeSet::new));
+
 
 
         // todo: write your code here
